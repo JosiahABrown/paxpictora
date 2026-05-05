@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors - Luminous Gallery */
+  --color-surface: #faf9f7;
+  --color-surface-dim: #dadad8;
+  --color-surface-bright: #faf9f7;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f4f3f1;
+  --color-surface-container: #efeeec;
+  --color-surface-container-high: #e9e8e6;
+  --color-surface-container-highest: #e3e2e0;
+  
+  --color-on-surface: #1a1c1b;
+  --color-on-surface-variant: #4d4540;
+  
+  --color-inverse-surface: #2f3130;
+  --color-inverse-on-surface: #f1f1ef;
+  
+  --color-outline: #7e756f;
+  --color-outline-variant: #cfc4bd;
+  
+  --color-primary: #181512;
+  --color-on-primary: #ffffff;
+  
+  --color-background: #faf9f7;
+  --color-on-background: #1a1c1b;
+
+  --color-secondary: #7e756f; /* Based on outline */
+
+  /* Spacing */
+  --spacing-margin-edge: 64px;
+  --spacing-unit: 8px;
+  --spacing-container-max: 1440px;
+  --spacing-gutter: 32px;
+  --spacing-section-gap: 128px;
+
+  /* Border Radius */
+  --radius-DEFAULT: 12px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* Typography */
+  --font-family-serif: 'Playfair Display', serif;
+  --font-family-body: 'Noto Sans', sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-on-surface);
+  }
+}
