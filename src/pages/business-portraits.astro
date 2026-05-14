@@ -1,0 +1,79 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Sidebar from '../components/Sidebar.astro';
+import PortraitCard from '../components/PortraitCard.astro';
+import placeholder from '../assets/images/placeholder.jpg';
+
+// Portfolio Data
+const portraits = [
+    { role: "CEO / Finance", name: "J. HOLDEN", tag: "C-SUITE", image: placeholder },
+    { role: "Partners / Legal", name: "WRIGHT & CO.", tag: "GROUP", image: placeholder },
+    { role: "Founder / Arch", name: "D. VANCE", tag: "STARTUP", image: placeholder },
+    { role: "CTO / Tech", name: "A. CHEN", tag: "TECH", image: placeholder },
+    { role: "Creative Director", name: "S. MILLER", tag: "AGENCY", image: placeholder },
+    { role: "Consultant", name: "M. REEVES", tag: "CONSULT", image: placeholder }
+];
+---
+
+<Layout title="Business Portraits | Pax Pictora">
+    <Sidebar />
+
+    <main class="pt-24 md:pt-0 md:ml-72 min-h-screen pb-section-gap bg-surface">
+        
+        <section class="p-8 md:p-16 border-b border-outline-variant">
+            <h2 class="font-serif text-4xl md:text-5xl text-primary max-w-5xl leading-tight">Archive: Business Portraits</h2>
+            <p class="font-sans text-lg text-on-surface-variant mt-6 max-w-2xl leading-relaxed">
+                Uncompromising visual authority. High-contrast, architectural framing for executive and commercial identity.
+            </p>
+        </section>
+
+        <section class="p-8 md:p-12 columns-1 md:columns-2 lg:columns-3 gap-6">
+            {portraits.map((portrait) => (
+                <PortraitCard {...portrait} />
+            ))}
+        </section>
+
+        <section class="p-8 md:p-16 border-t border-outline-variant bg-surface-container-low mt-16" id="contact">
+            <div class="max-w-4xl mx-auto bg-surface-container-lowest border border-outline-variant rounded-xl p-8 md:p-12 shadow-sm">
+                <h2 class="font-serif text-3xl text-primary mb-8 text-center">Initiate Booking</h2>
+                
+                <form class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="flex flex-col">
+                            <label class="font-sans text-xs font-semibold tracking-widest text-on-surface uppercase mb-2">Full Name</label>
+                            <input class="bg-surface border border-outline-variant text-on-surface p-4 font-sans rounded-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="Enter name" type="text"/>
+                        </div>
+                        <div class="flex flex-col">
+                            <label class="font-sans text-xs font-semibold tracking-widest text-on-surface uppercase mb-2">Corporate Entity</label>
+                            <input class="bg-surface border border-outline-variant text-on-surface p-4 font-sans rounded-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="Company name" type="text"/>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col">
+                        <label class="font-sans text-xs font-semibold tracking-widest text-on-surface uppercase mb-2">Email Address</label>
+                        <input class="bg-surface border border-outline-variant text-on-surface p-4 font-sans rounded-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="Secure communication" type="email"/>
+                    </div>
+                    
+                    <div class="flex flex-col">
+                        <label class="font-sans text-xs font-semibold tracking-widest text-on-surface uppercase mb-2">Project Scope</label>
+                        <textarea class="bg-surface border border-outline-variant text-on-surface p-4 font-sans rounded-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="Describe requirements (e.g., Executive team, annual report, editorial)" rows="4"></textarea>
+                    </div>
+                    
+                    <button class="w-full bg-primary text-on-primary font-sans text-sm font-semibold tracking-widest uppercase py-4 rounded-xl hover:bg-inverse-surface transition-colors mt-8" type="submit">
+                        Submit Inquiry
+                    </button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="w-full py-12 px-8 flex flex-col md:flex-row justify-between items-center gap-6 border-t border-outline-variant bg-surface md:ml-72 md:w-[calc(100%-18rem)] z-50 relative">
+        <p class="font-sans text-xs font-semibold tracking-widest text-on-surface-variant uppercase">Pax Pictora © 2024 All Rights Reserved</p>
+        <div class="flex gap-8 font-sans text-xs font-semibold tracking-widest uppercase">
+            <a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Instagram</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Behance</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors" href="#">LinkedIn</a>
+        </div>
+    </footer>
+</Layout>
