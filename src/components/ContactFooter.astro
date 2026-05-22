@@ -1,0 +1,36 @@
+---
+---
+<footer id="contact" class="py-32 px-8 md:px-16 lg:px-24 max-w-4xl mx-auto flex flex-col items-center">
+  <h2 class="font-serif text-5xl md:text-7xl mb-24 text-center">Inquire</h2>
+  
+  <form action="https://api.web3forms.com/submit" method="POST" class="w-full space-y-16 mb-40">
+    <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+    
+    <div class="flex flex-col">
+      <label for="name" class="font-sans text-[10px] uppercase tracking-[0.2em] mb-4 text-text-primary">Name</label>
+      <input type="text" id="name" name="name" required class="bg-transparent border-b border-border-subtle focus:border-text-primary outline-none py-2 font-sans text-xl transition-colors text-text-primary" />
+    </div>
+
+    <div class="flex flex-col">
+      <label for="email" class="font-sans text-[10px] uppercase tracking-[0.2em] mb-4 text-text-primary">Email</label>
+      <input type="email" id="email" name="email" required class="bg-transparent border-b border-border-subtle focus:border-text-primary outline-none py-2 font-sans text-xl transition-colors text-text-primary" />
+    </div>
+
+    <div class="flex flex-col">
+      <label for="message" class="font-sans text-[10px] uppercase tracking-[0.2em] mb-4 text-text-primary">Project Scope</label>
+      <textarea id="message" name="message" rows="1" required class="bg-transparent border-b border-border-subtle focus:border-text-primary outline-none py-2 font-sans text-xl transition-colors resize-none text-text-primary"></textarea>
+    </div>
+
+    <button type="submit" class="font-sans text-[10px] uppercase tracking-[0.2em] border-b border-text-primary pb-1 hover:text-text-secondary hover:border-text-secondary transition-colors mt-8 text-text-primary">Submit Inquiry</button>
+  </form>
+
+  <div class="w-full flex flex-col md:flex-row justify-between items-center border-t border-border-subtle pt-12 gap-8">
+    <p class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-secondary">
+      &copy; {new Date().getFullYear()} Pax Pictora. All rights reserved.
+    </p>
+    <div class="flex gap-8">
+      <a href="#" class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-primary hover:text-text-secondary transition-colors">Instagram</a>
+      <a href="#" class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-primary hover:text-text-secondary transition-colors">LinkedIn</a>
+    </div>
+  </div>
+</footer>

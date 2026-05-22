@@ -1,0 +1,15 @@
+---
+import { Image } from 'astro:assets';
+import placeholderImg from '../assets/images/placeholder.jpg';
+---
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+  <div class="absolute inset-0 z-0">
+    <Image src={placeholderImg} alt="Hero Background" class="w-full h-full object-cover" />
+    <div class="absolute inset-0 bg-gradient-to-b from-black/60 to-black/30"></div>
+  </div>
+  
+  <div class="relative z-10 text-center px-4 text-white">
+    <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl mb-6 font-normal">Framing the Unspoken</h1>
+    <p class="font-sans text-[10px] md:text-xs tracking-[0.2em] uppercase text-white/80">Professional Photography Services in Oklahoma</p>
+  </div>
+</section>

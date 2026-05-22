@@ -1,0 +1,22 @@
+---
+import { Image } from 'astro:assets';
+import placeholderImg from '../assets/images/placeholder.jpg';
+---
+<section id="portfolio" class="py-32 px-8 md:px-16 lg:px-24 max-w-7xl mx-auto">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
+    <div class="order-2 md:order-1">
+      <h2 class="font-serif text-4xl md:text-5xl lg:text-6xl mb-12">The Vision</h2>
+      <div class="font-sans text-text-secondary space-y-8 leading-relaxed text-lg">
+        <p>
+          I approach photography not just as a means of capturing light, but as a way of preserving the raw, unpolished essence of a moment. Every space, every interaction, and every shadow tells a story that deserves to be documented with integrity.
+        </p>
+        <p>
+          Focusing on both documentary and architectural photography, my goal is to frame the unspoken narratives of Oklahoma. By emphasizing extreme minimalism and a high-contrast monochrome aesthetic, the subjects are allowed to speak for themselves without the distraction of unnecessary elements.
+        </p>
+      </div>
+    </div>
+    <div class="order-1 md:order-2">
+      <Image src={placeholderImg} alt="Photographer" class="w-full aspect-[3/4] object-cover" />
+    </div>
+  </div>
+</section>

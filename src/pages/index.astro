@@ -1,93 +1,21 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import placeholder from '../assets/images/placeholder.jpg';
+import Navigation from '../components/Navigation.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Testimonials from '../components/Testimonials.astro';
+import ContactFooter from '../components/ContactFooter.astro';
 
-const categories = ['Real Estate', 'Portraits', 'Events', 'Nature'];
-
-// Simulating 6 placeholder images per category for the layout
-const mockGallery = categories.map(cat => ({
-  category: cat,
-  images: Array(6).fill({ src: placeholder.src, alt: `${cat} shot detail` })
-}));
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<Layout title="Pax Pictora | Archive">
-  <Header />
-
-  <main id="portfolio" class="pt-40 px-8 md:px-16 max-w-[1600px] mx-auto min-h-screen">
-    
-    <div class="flex flex-wrap gap-8 justify-center mb-16 font-sans text-[10px] font-semibold tracking-[0.2em] uppercase">
-      {categories.map((cat, index) => (
-        <button 
-          class={`tab-btn pb-2 border-b transition-colors ${index === 0 ? 'text-text-primary border-text-primary' : 'text-text-secondary border-transparent hover:text-text-primary'}`}
-          data-target={cat.replace(/\s+/g, '-').toLowerCase()}
-        >
-          {cat}
-        </button>
-      ))}
-    </div>
-
-    <div class="gallery-container relative">
-      {mockGallery.map((section, index) => (
-        <div 
-          id={section.category.replace(/\s+/g, '-').toLowerCase()} 
-          class={`grid-section columns-1 md:columns-2 lg:columns-3 gap-8 transition-opacity duration-500 ${index === 0 ? 'block opacity-100' : 'hidden opacity-0'}`}
-        >
-          {section.images.map((img) => (
-            <div class="break-inside-avoid mb-8 cursor-pointer group" onclick={`openLightbox('${img.src}', '${img.alt}')`}>
-              <img src={img.src} alt={img.alt} class="w-full h-auto object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
-            </div>
-          ))}
-        </div>
-      ))}
-    </div>
-  </main>
-
-  <Footer />
-
-  <dialog id="lightbox" class="p-0 m-auto bg-transparent border-none max-w-[90vw] max-h-[90vh] outline-none backdrop:bg-background/85 backdrop:backdrop-blur-md" onclick="if(event.target === this) this.close()">
-    <div class="relative w-full h-full flex flex-col items-center justify-center">
-      <img id="lightbox-img" src="" alt="" class="max-h-[85vh] w-auto object-contain shadow-2xl" />
-      <p id="lightbox-caption" class="mt-6 font-sans text-[10px] font-semibold tracking-widest uppercase text-text-primary bg-background px-4 py-2"></p>
-      
-      <button onclick="document.getElementById('lightbox').close()" class="absolute -top-12 right-0 text-text-primary font-sans text-xs tracking-widest uppercase hover:text-text-secondary transition-colors">
-        Close
-      </button>
-    </div>
-  </dialog>
+<Layout title="Pax Pictora | Framing the Unspoken">
+	<Navigation />
+	<main>
+		<Hero />
+		<About />
+		<Testimonials />
+	</main>
+	<ContactFooter />
 </Layout>
-
-<script is:inline>
-  // Tab Switching Logic
-  const btns = document.querySelectorAll('.tab-btn');
-  const sections = document.querySelectorAll('.grid-section');
-
-  btns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      // Reset active states
-      btns.forEach(b => b.className = 'tab-btn pb-2 border-b transition-colors text-text-secondary border-transparent hover:text-text-primary');
-      sections.forEach(s => {
-        s.classList.add('hidden', 'opacity-0');
-        s.classList.remove('block', 'opacity-100');
-      });
-
-      // Set new active state
-      btn.className = 'tab-btn pb-2 border-b transition-colors text-text-primary border-text-primary';
-      const target = document.getElementById(btn.dataset.target);
-      target.classList.remove('hidden');
-      
-      // Slight delay for smooth fade-in
-      setTimeout(() => target.classList.add('block', 'opacity-100'), 50);
-    });
-  });
-
-  // Lightbox Logic
-  function openLightbox(src, alt) {
-    const dialog = document.getElementById('lightbox');
-    document.getElementById('lightbox-img').src = src;
-    document.getElementById('lightbox-caption').textContent = alt;
-    dialog.showModal();
-  }
-</script>
