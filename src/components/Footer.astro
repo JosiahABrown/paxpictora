@@ -1,0 +1,40 @@
+---
+const currentYear = new Date().getFullYear();
+---
+<footer id="contact" class="w-full py-32 px-8 md:px-16 mt-32 bg-surface">
+  <div class="max-w-2xl mx-auto text-center mb-32">
+    <h2 class="font-serif text-4xl md:text-5xl mb-16 text-text-primary">Initiate Contact</h2>
+    
+    <form action="https://api.web3forms.com/submit" method="POST" class="space-y-12 text-left">
+      <input type="hidden" name="access_key" value="fb887f14-f028-46f5-bb13-953c421cd905">
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div class="flex flex-col border-b border-border-subtle focus-within:border-text-primary transition-colors pb-2">
+          <label class="font-sans text-[10px] font-semibold tracking-widest uppercase text-text-secondary mb-2">Name</label>
+          <input type="text" name="name" required class="bg-transparent outline-none font-sans text-sm text-text-primary placeholder-text-secondary/50" placeholder="Your full name">
+        </div>
+        <div class="flex flex-col border-b border-border-subtle focus-within:border-text-primary transition-colors pb-2">
+          <label class="font-sans text-[10px] font-semibold tracking-widest uppercase text-text-secondary mb-2">Email</label>
+          <input type="email" name="email" required class="bg-transparent outline-none font-sans text-sm text-text-primary placeholder-text-secondary/50" placeholder="Your email address">
+        </div>
+      </div>
+      
+      <div class="flex flex-col border-b border-border-subtle focus-within:border-text-primary transition-colors pb-2">
+        <label class="font-sans text-[10px] font-semibold tracking-widest uppercase text-text-secondary mb-2">Project Scope</label>
+        <textarea name="message" required rows="3" class="bg-transparent outline-none font-sans text-sm text-text-primary placeholder-text-secondary/50 resize-none" placeholder="Describe the vision..."></textarea>
+      </div>
+      
+      <button type="submit" class="w-full py-5 mt-8 font-sans text-[10px] font-semibold tracking-[0.2em] uppercase bg-text-primary text-background hover:bg-text-secondary transition-colors">
+        Submit Inquiry
+      </button>
+    </form>
+  </div>
+
+  <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-border-subtle font-sans text-[10px] font-semibold tracking-widest uppercase text-text-secondary">
+    <p>Pax Pictora © {currentYear}</p>
+    <div class="flex gap-8 mt-4 md:mt-0">
+      <a href="#" class="hover:text-text-primary transition-colors">Instagram</a>
+      <a href="#" class="hover:text-text-primary transition-colors">LinkedIn</a>
+    </div>
+  </div>
+</footer>
