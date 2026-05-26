@@ -6,25 +6,17 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-<<<<<<< HEAD
-    "dev": "astro dev",
-=======
     "dev": "astro dev --host",
->>>>>>> master
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "astro": "^6.1.10"
-=======
     "@tailwindcss/vite": "^4.2.4",
     "astro": "^6.2.2",
     "tailwindcss": "^4.2.4"
   },
   "overrides": {
     "vite": "^7"
->>>>>>> master
   }
 }
