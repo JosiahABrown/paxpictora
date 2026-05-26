@@ -1,0 +1,21 @@
+---
+import { Image } from 'astro:assets';
+import bg from '../assets/images/BW-Utah.jpg';
+---
+<section class="relative h-screen w-full flex items-center justify-center overflow-hidden">
+  <div class="absolute inset-0 w-full h-full">
+    <Image 
+      src={bg} 
+      alt="Pax Pictora Photography" 
+      class="w-full h-full object-cover"
+    />
+    <div class="absolute inset-0 bg-black/40 mix-blend-multiply"></div>
+    <div class="absolute inset-0 bg-linear-to-b from-black/60 via-transparent to-black/60"></div>
+  </div>
+  
+  <div class="relative z-10 text-center animate-fade-in-up" style="animation-delay: 0.2s;">
+    <h1 class="font-serif-sc font-bold text-7xl md:text-9xl text-white tracking-widest">
+      PAX PICTORA
+    </h1>
+  </div>
+</section>

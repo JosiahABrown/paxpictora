@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@theme {
+  /* Luxury Typography Minimalist Palette */
+  --color-background: #ffffff;
+  --color-surface: #fafafa;
+  --color-text-primary: #111111;
+  --color-text-secondary: #666666;
+  --color-border-subtle: #eeeeee;
+
+  /* Typography */
+  --font-family-serif: 'Bodoni Moda', serif;
+  --font-family-sans: 'Manrope', sans-serif;
+  --font-family-serif-sc: 'Bodoni Moda SC', serif;
+
+  /* Animations */
+  --animate-fade-in-up: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+  /* Spacing & Layout */
+  --spacing-header-height: 80px;
+  --spacing-section: 120px;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Lightbox Backdrop Blur Utility */
+dialog::backdrop {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
