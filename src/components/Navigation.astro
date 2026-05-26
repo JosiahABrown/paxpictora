@@ -1,41 +1,17 @@
 ---
 ---
-<header id="main-nav" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-6 px-8 flex justify-between items-center text-text-primary bg-transparent">
-  <div class="font-serif text-2xl tracking-wide text-white mix-blend-difference" id="brand-logo">Pax Pictora</div>
-  <nav class="flex gap-8">
-    <a href="#portfolio" class="font-sans text-[10px] uppercase tracking-[0.2em] text-white mix-blend-difference hover:opacity-70 transition-opacity">Portfolio</a>
-    <a href="#contact" class="font-sans text-[10px] uppercase tracking-[0.2em] text-white mix-blend-difference hover:opacity-70 transition-opacity">Contact</a>
-  </nav>
+<header class="fixed top-0 left-0 w-full z-50 bg-background/60 backdrop-blur-md animate-fade-in-up">
+  <div class="max-w-7xl mx-auto px-6 h-header-height flex items-center justify-between">
+    <a href="/" class="font-serif-sc font-bold text-xl tracking-widest text-text-primary">
+      PAX PICTORA
+    </a>
+    <nav class="flex gap-8">
+      <a href="/portfolio" class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-primary hover:text-text-secondary transition-colors">
+        Portfolio
+      </a>
+      <a href="#contact" class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-primary hover:text-text-secondary transition-colors">
+        Contact
+      </a>
+    </nav>
+  </div>
 </header>
-
-<script>
-  const nav = document.getElementById('main-nav');
-  const logo = document.getElementById('brand-logo');
-  const links = nav?.querySelectorAll('a');
-
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      nav?.classList.add('bg-white/90', 'backdrop-blur-md', 'py-4', 'border-b', 'border-border-subtle');
-      nav?.classList.remove('bg-transparent', 'py-6');
-      
-      logo?.classList.remove('text-white', 'mix-blend-difference');
-      logo?.classList.add('text-text-primary');
-
-      links?.forEach(link => {
-        link.classList.remove('text-white', 'mix-blend-difference');
-        link.classList.add('text-text-primary');
-      });
-    } else {
-      nav?.classList.remove('bg-white/90', 'backdrop-blur-md', 'py-4', 'border-b', 'border-border-subtle');
-      nav?.classList.add('bg-transparent', 'py-6');
-      
-      logo?.classList.add('text-white', 'mix-blend-difference');
-      logo?.classList.remove('text-text-primary');
-
-      links?.forEach(link => {
-        link.classList.add('text-white', 'mix-blend-difference');
-        link.classList.remove('text-text-primary');
-      });
-    }
-  });
-</script>

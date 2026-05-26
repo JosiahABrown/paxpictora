@@ -1,34 +1,48 @@
 ---
 ---
-<section class="py-32 px-8 md:px-16 lg:px-24 bg-surface">
-  <div class="max-w-7xl mx-auto">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-12 lg:gap-20">
-      <div class="flex flex-col">
-        <span class="font-serif text-6xl text-text-primary/20 leading-none mb-4">"</span>
-        <p class="font-serif text-2xl md:text-3xl leading-snug mb-10 text-text-primary">The architectural shots were nothing short of breathtaking. A true master of shadow and form.</p>
-        <div class="mt-auto">
-          <p class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-primary mb-1">Eleanor Vance</p>
-          <p class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-secondary">Lead Architect</p>
-        </div>
-      </div>
-      
-      <div class="flex flex-col">
-        <span class="font-serif text-6xl text-text-primary/20 leading-none mb-4">"</span>
-        <p class="font-serif text-2xl md:text-3xl leading-snug mb-10 text-text-primary">An eye for the unseen. The documentary series captured our event with absolute raw honesty.</p>
-        <div class="mt-auto">
-          <p class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-primary mb-1">Julian Thorne</p>
-          <p class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-secondary">Creative Director</p>
-        </div>
+<section class="py-32 bg-surface overflow-hidden">
+  <div class="max-w-4xl mx-auto px-6 text-center relative h-[400px] flex items-center justify-center">
+    <div class="testimonial-carousel relative w-full h-full flex items-center justify-center">
+      <!-- Item 1 -->
+      <div class="testimonial-item absolute transition-opacity duration-1000 ease-in-out opacity-100 flex flex-col items-center justify-center w-full">
+        <span class="font-serif text-8xl text-text-secondary/20 mb-4 block leading-none">"</span>
+        <blockquote class="font-serif text-2xl md:text-4xl text-text-primary leading-relaxed mb-8">
+          Pax Pictora transformed our brutalist concrete structure into a canvas of light and shadow. The resulting images are nothing short of poetic.
+        </blockquote>
+        <cite class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-secondary not-italic">
+          — Elena Rostova, Lead Architect
+        </cite>
       </div>
 
-      <div class="flex flex-col">
-        <span class="font-serif text-6xl text-text-primary/20 leading-none mb-4">"</span>
-        <p class="font-serif text-2xl md:text-3xl leading-snug mb-10 text-text-primary">Minimalist, elegant, and timeless. Every frame feels like a classic piece of art.</p>
-        <div class="mt-auto">
-          <p class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-primary mb-1">Clara Hughes</p>
-          <p class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-secondary">Editor-in-Chief</p>
-        </div>
+      <!-- Item 2 -->
+      <div class="testimonial-item absolute transition-opacity duration-1000 ease-in-out opacity-0 flex flex-col items-center justify-center w-full pointer-events-none">
+        <span class="font-serif text-8xl text-text-secondary/20 mb-4 block leading-none">"</span>
+        <blockquote class="font-serif text-2xl md:text-4xl text-text-primary leading-relaxed mb-8">
+          A rare eye for the spaces between things. The documentary style brought a profound authenticity to our campaign that we hadn't thought possible.
+        </blockquote>
+        <cite class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-secondary not-italic">
+          — Marcus Vance, Creative Director
+        </cite>
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const items = document.querySelectorAll('.testimonial-item');
+    if (items.length <= 1) return;
+
+    let currentIndex = 0;
+
+    setInterval(() => {
+      items[currentIndex].classList.remove('opacity-100');
+      items[currentIndex].classList.add('opacity-0', 'pointer-events-none');
+
+      currentIndex = (currentIndex + 1) % items.length;
+
+      items[currentIndex].classList.remove('opacity-0', 'pointer-events-none');
+      items[currentIndex].classList.add('opacity-100');
+    }, 6000);
+  });
+</script>

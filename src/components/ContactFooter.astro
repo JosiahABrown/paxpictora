@@ -1,36 +1,43 @@
 ---
 ---
-<footer id="contact" class="py-32 px-8 md:px-16 lg:px-24 max-w-4xl mx-auto flex flex-col items-center">
-  <h2 class="font-serif text-5xl md:text-7xl mb-24 text-center">Inquire</h2>
-  
-  <form action="https://api.web3forms.com/submit" method="POST" class="w-full space-y-16 mb-40">
-    <input type="hidden" name="access_key" value="fb887f14-f028-46f5-bb13-953c421cd905">
-    
-    <div class="flex flex-col">
-      <label for="name" class="font-sans text-[10px] uppercase tracking-[0.2em] mb-4 text-text-primary">Name</label>
-      <input type="text" id="name" name="name" required class="bg-transparent border-b border-border-subtle focus:border-text-primary outline-none py-2 font-sans text-xl transition-colors text-text-primary" />
-    </div>
+<footer id="contact" class="pt-32 pb-16 px-6 max-w-4xl mx-auto">
+  <div class="mb-24 animate-fade-in-up">
+    <h2 class="font-serif text-4xl md:text-5xl text-text-primary mb-16 text-center">Inquiries</h2>
+    <form action="https://api.web3forms.com/submit" method="POST" class="space-y-12">
+      <!-- Web3Forms dummy access key -->
+      <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
 
-    <div class="flex flex-col">
-      <label for="email" class="font-sans text-[10px] uppercase tracking-[0.2em] mb-4 text-text-primary">Email</label>
-      <input type="email" id="email" name="email" required class="bg-transparent border-b border-border-subtle focus:border-text-primary outline-none py-2 font-sans text-xl transition-colors text-text-primary" />
-    </div>
+      <div class="flex flex-col group">
+        <label for="name" class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-secondary mb-2 transition-colors group-focus-within:text-text-primary">Name</label>
+        <input type="text" id="name" name="name" required class="bg-transparent border-b border-border-subtle focus:border-text-primary py-2 outline-none font-sans text-lg text-text-primary transition-colors rounded-none" />
+      </div>
 
-    <div class="flex flex-col">
-      <label for="message" class="font-sans text-[10px] uppercase tracking-[0.2em] mb-4 text-text-primary">Project Scope</label>
-      <textarea id="message" name="message" rows="1" required class="bg-transparent border-b border-border-subtle focus:border-text-primary outline-none py-2 font-sans text-xl transition-colors resize-none text-text-primary"></textarea>
-    </div>
+      <div class="flex flex-col group">
+        <label for="email" class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-secondary mb-2 transition-colors group-focus-within:text-text-primary">Email</label>
+        <input type="email" id="email" name="email" required class="bg-transparent border-b border-border-subtle focus:border-text-primary py-2 outline-none font-sans text-lg text-text-primary transition-colors rounded-none" />
+      </div>
 
-    <button type="submit" class="font-sans text-[10px] uppercase tracking-[0.2em] border-b border-text-primary pb-1 hover:text-text-secondary hover:border-text-secondary transition-colors mt-8 text-text-primary">Submit Inquiry</button>
-  </form>
+      <div class="flex flex-col group">
+        <label for="message" class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-secondary mb-2 transition-colors group-focus-within:text-text-primary">Project Scope</label>
+        <textarea id="message" name="message" rows="4" required class="bg-transparent border-b border-border-subtle focus:border-text-primary py-2 outline-none font-sans text-lg text-text-primary transition-colors resize-none rounded-none"></textarea>
+      </div>
 
-  <div class="w-full flex flex-col md:flex-row justify-between items-center border-t border-border-subtle pt-12 gap-8">
-    <p class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-secondary">
+      <div class="text-center pt-8">
+        <button type="submit" class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-primary border border-text-primary px-10 py-5 hover:bg-text-primary hover:text-background transition-colors duration-300">
+          Submit Inquiry
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-border-subtle border-opacity-50">
+    <p class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-secondary mb-4 md:mb-0">
       &copy; {new Date().getFullYear()} Pax Pictora. All rights reserved.
     </p>
     <div class="flex gap-8">
-      <a href="#" class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-primary hover:text-text-secondary transition-colors">Instagram</a>
-      <a href="#" class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-primary hover:text-text-secondary transition-colors">LinkedIn</a>
+      <a href="#" class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-secondary hover:text-text-primary transition-colors">Instagram</a>
+      <a href="#" class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-secondary hover:text-text-primary transition-colors">Behance</a>
+      <a href="#" class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-secondary hover:text-text-primary transition-colors">LinkedIn</a>
     </div>
   </div>
 </footer>

@@ -11,6 +11,10 @@
   /* Typography */
   --font-family-serif: 'Bodoni Moda', serif;
   --font-family-sans: 'Manrope', sans-serif;
+  --font-family-serif-sc: 'Bodoni Moda SC', serif;
+
+  /* Animations */
+  --animate-fade-in-up: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 
   /* Spacing & Layout */
   --spacing-header-height: 80px;
@@ -29,4 +33,15 @@
 dialog::backdrop {
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(8px);
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
