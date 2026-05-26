@@ -1,11 +1,11 @@
 ---
 import { Image } from 'astro:assets';
-import placeholderImg from '../assets/images/placeholder.jpg';
+import placeholder from '../assets/images/placeholder.jpg';
 ---
 <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
   <div class="absolute inset-0 z-0">
-    <Image src={placeholderImg} alt="Hero Background" class="w-full h-full object-cover" />
-    <div class="absolute inset-0 bg-gradient-to-b from-black/60 to-black/30"></div>
+    <Image src={placeholder} alt="Hero Background" class="w-full h-full object-cover" />
+    <div class="absolute inset-0 bg-linear-to-b from-black/60 to-black/30"></div>
   </div>
   
   <div class="relative z-10 text-center px-4 text-white">
