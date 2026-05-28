@@ -1,0 +1,809 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getImage } from 'astro:assets';
+import heroRaw from '../assets/images/BW-Utah.jpg';
+import pfpRaw from '../assets/images/pfp.jpg';
+const heroImg = await getImage({ src: heroRaw });
+const pfpImg = await getImage({ src: pfpRaw });
+---
+
+<Layout title="Pax Pictora — Portfolio">
+  <header class="site-header" id="siteHeader">
+    <a href="/" class="marque" aria-label="Pax Pictora — home">
+      Pax<span class="sep" aria-hidden="true"></span>Pictora
+    </a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/portfolio" class="is-here">Portfolio</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="page-intro">
+    <div class="top">
+      <h1>The <em>Portfolio.</em></h1>
+      <div class="meta">
+        <div><strong>2019 — 2026</strong></div>
+        <div>Seven years of photos</div>
+        <div>Edited &amp; archived</div>
+      </div>
+    </div>
+    <div class="section-label">A selected archive</div>
+    <p class="dek">A small, deliberate selection of recent work — residences, sittings, occasions, and the quieter studies in between. Photos may be revisited; nothing is final.</p>
+  </section>
+
+  <div class="tabs-wrap">
+    <div class="tabs" role="tablist" aria-label="Categories">
+      <div class="tab-row">
+        <button class="tab is-active" data-cat="all" role="tab">All <span class="count">·24</span></button>
+        <button class="tab" data-cat="real-estate" role="tab">Real Estate <span class="count">·07</span></button>
+        <button class="tab" data-cat="portraits" role="tab">Portraits <span class="count">·06</span></button>
+        <button class="tab" data-cat="events" role="tab">Events <span class="count">·06</span></button>
+        <button class="tab" data-cat="nature" role="tab">Nature <span class="count">·05</span></button>
+      </div>
+      <div class="tab-meta" id="tabMeta">Showing 24 photos</div>
+    </div>
+  </div>
+
+  <main class="gallery" id="gallery"></main>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true">
+    <button class="lightbox-close" id="lbClose" aria-label="Close">
+      Close <span class="x" aria-hidden="true"></span>
+    </button>
+    <button class="lightbox-nav prev" id="lbPrev" aria-label="Previous">
+      <span class="line" aria-hidden="true"></span> Prev
+    </button>
+    <div class="lightbox-stage">
+      <div class="lightbox-frame" id="lbFrame"></div>
+      <div class="lightbox-caption" id="lbCaption">
+        <span class="lb-plate"></span>
+        <span class="lb-title"></span>
+        <span class="lb-meta"></span>
+      </div>
+    </div>
+    <button class="lightbox-nav next" id="lbNext" aria-label="Next">
+      Next <span class="line" aria-hidden="true"></span>
+    </button>
+  </div>
+</Layout>
+
+<style>
+  /* Header — always frosted on portfolio */
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    padding: 18px 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(21, 17, 13, 0.78);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .marque {
+    font-family: var(--sans);
+    font-size: 13px;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--cream);
+  }
+
+  .marque .sep {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    background: var(--accent);
+    margin: 0 14px 2px;
+    transform: rotate(45deg);
+    vertical-align: middle;
+  }
+
+  .primary {
+    display: flex;
+    gap: 44px;
+    align-items: center;
+    font-family: var(--sans);
+    font-size: 12px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+  }
+
+  .primary a {
+    position: relative;
+    padding: 4px 0;
+    transition: color 220ms ease;
+  }
+
+  .primary a.is-here,
+  .primary a:hover {
+    color: var(--cream);
+  }
+
+  .primary a.is-here::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: var(--cream);
+  }
+
+  /* Page intro */
+  .page-intro {
+    padding: 180px 80px 60px;
+    max-width: 1500px;
+    margin: 0 auto;
+  }
+
+  .page-intro .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 60px;
+    margin-bottom: 80px;
+  }
+
+  .page-intro h1 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(72px, 11vw, 168px);
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: var(--cream);
+  }
+
+  .page-intro h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--cream-dim);
+  }
+
+  .page-intro .meta {
+    text-align: right;
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.36em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    line-height: 1.9;
+  }
+
+  .page-intro .meta strong {
+    color: var(--cream);
+    font-weight: 400;
+  }
+
+  .section-label {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .section-label::before {
+    content: "";
+    width: 28px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .dek {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--cream-dim);
+    max-width: 52ch;
+    margin: 0;
+  }
+
+  /* Tabs */
+  .tabs-wrap {
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: rgba(21, 17, 13, 0.92);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+  }
+
+  .tabs {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 0 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  .tabs .tab-row {
+    display: flex;
+    gap: 6px;
+  }
+
+  .tab {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    color: var(--taupe);
+    font-family: var(--sans);
+    font-size: 12px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    padding: 28px 22px;
+    cursor: pointer;
+    position: relative;
+    transition: color 320ms ease;
+  }
+
+  .tab .count {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    margin-left: 8px;
+    color: var(--taupe-dim);
+    vertical-align: super;
+    transition: color 320ms ease;
+  }
+
+  .tab:hover { color: var(--cream-dim); }
+  .tab.is-active { color: var(--cream); }
+  .tab.is-active .count { color: var(--accent); }
+
+  .tab::after {
+    content: "";
+    position: absolute;
+    left: 22px;
+    right: 22px;
+    bottom: -1px;
+    height: 1px;
+    background: var(--cream);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 360ms cubic-bezier(0.6, 0.05, 0.2, 1);
+  }
+
+  .tab.is-active::after { transform: scaleX(1); }
+
+  .tab-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--taupe);
+  }
+
+  /* Masonry gallery */
+  .gallery {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 60px 80px 120px;
+    column-count: 3;
+    column-gap: 28px;
+  }
+
+  /* Tiles */
+  :global(.tile) {
+    break-inside: avoid;
+    margin-bottom: 28px;
+    position: relative;
+    display: block;
+    cursor: zoom-in;
+    overflow: hidden;
+    background: var(--ink-2);
+    transition: opacity 500ms ease, filter 500ms ease;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  :global(.tile.is-hidden) { display: none; }
+
+  :global(.tile-frame) {
+    width: 100%;
+    display: block;
+    position: relative;
+  }
+
+  :global(.tile img),
+  :global(.tile .placeholder) {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: transform 1200ms cubic-bezier(0.2, 0.6, 0.2, 1), filter 600ms ease;
+  }
+
+  :global(.tile:hover img),
+  :global(.tile:hover .placeholder) {
+    transform: scale(1.03);
+  }
+
+  :global(.placeholder) {
+    position: relative;
+    overflow: hidden;
+    background:
+      repeating-linear-gradient(45deg, rgba(196, 166, 132, 0.045) 0 1px, transparent 1px 14px),
+      linear-gradient(160deg, #2a2218 0%, #1d1812 70%);
+  }
+
+  :global(.placeholder .ph-inner) {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 22px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--taupe);
+  }
+
+  :global(.placeholder .ph-tag) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+
+  :global(.placeholder .ph-tag span:first-child) { color: var(--accent); }
+
+  :global(.placeholder .ph-mid) {
+    align-self: center;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  :global(.placeholder .ph-mid .crosshair) {
+    display: block;
+    width: 36px;
+    height: 36px;
+    margin: 0 auto 18px;
+    position: relative;
+    opacity: 0.5;
+  }
+
+  :global(.placeholder .ph-mid .crosshair::before),
+  :global(.placeholder .ph-mid .crosshair::after) {
+    content: "";
+    position: absolute;
+    background: var(--taupe);
+  }
+
+  :global(.placeholder .ph-mid .crosshair::before) {
+    left: 50%; top: 0; bottom: 0;
+    width: 1px; transform: translateX(-50%);
+  }
+
+  :global(.placeholder .ph-mid .crosshair::after) {
+    top: 50%; left: 0; right: 0;
+    height: 1px; transform: translateY(-50%);
+  }
+
+  :global(.placeholder .ph-mid .label) {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--cream-dim);
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  :global(.tile-caption) {
+    padding: 14px 2px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  :global(.tile-caption .ttl) {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--cream-dim);
+    line-height: 1.25;
+  }
+
+  :global(.tile-caption .num) {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--taupe-dim);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .gallery:hover :global(.tile:not(:hover)) {
+    filter: brightness(0.7) saturate(0.85);
+  }
+
+  /* Lightbox */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(15, 12, 9, 0.78);
+    backdrop-filter: blur(22px) saturate(120%);
+    -webkit-backdrop-filter: blur(22px) saturate(120%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 80px 120px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 480ms ease;
+  }
+
+  .lightbox.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .lightbox-stage {
+    position: relative;
+    max-width: min(1200px, 100%);
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .lightbox-frame {
+    max-width: 100%;
+    max-height: calc(100vh - 240px);
+    transform: scale(0.97);
+    transition: transform 600ms cubic-bezier(0.2, 0.6, 0.2, 1);
+    position: relative;
+  }
+
+  .lightbox.is-open .lightbox-frame { transform: scale(1); }
+
+  .lightbox-frame :global(> *) {
+    max-width: 100%;
+    max-height: calc(100vh - 240px);
+    display: block;
+  }
+
+  .lightbox-caption {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 40px;
+    align-items: baseline;
+    width: 100%;
+    color: var(--cream);
+    border-top: 1px solid var(--rule);
+    padding-top: 22px;
+  }
+
+  .lightbox-caption .lb-plate {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+
+  .lightbox-caption .lb-title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    color: var(--cream);
+    letter-spacing: 0.005em;
+  }
+
+  .lightbox-caption .lb-meta {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    text-align: right;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 24px;
+    right: 32px;
+    appearance: none;
+    background: transparent;
+    border: 0;
+    color: var(--cream-dim);
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px;
+    transition: color 220ms ease;
+  }
+
+  .lightbox-close:hover { color: var(--cream); }
+
+  .lightbox-close .x {
+    width: 18px;
+    height: 18px;
+    position: relative;
+  }
+
+  .lightbox-close .x::before,
+  .lightbox-close .x::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; top: 50%;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .lightbox-close .x::before { transform: rotate(45deg); }
+  .lightbox-close .x::after  { transform: rotate(-45deg); }
+
+  .lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    appearance: none;
+    background: transparent;
+    border: 0;
+    color: var(--cream-dim);
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 18px 22px;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    transition: color 220ms ease, gap 220ms ease;
+  }
+
+  .lightbox-nav:hover { color: var(--cream); gap: 22px; }
+  .lightbox-nav.prev { left: 24px; }
+  .lightbox-nav.next { right: 24px; }
+
+  .lightbox-nav .line {
+    width: 36px;
+    height: 1px;
+    background: currentColor;
+    position: relative;
+  }
+
+  .lightbox-nav .line::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 1px;
+    background: currentColor;
+    top: -3px;
+  }
+
+  .lightbox-nav.next .line::after { right: 0; transform: rotate(35deg); transform-origin: right center; }
+  .lightbox-nav.prev .line::after { left: 0; transform: rotate(-35deg); transform-origin: left center; }
+
+  @media (max-width: 960px) {
+    .site-header { padding: 14px 28px; }
+    .primary { gap: 26px; font-size: 11px; }
+    .page-intro { padding: 130px 28px 40px; }
+    .page-intro .top { flex-direction: column; align-items: flex-start; gap: 28px; }
+    .page-intro .meta { text-align: left; }
+    .tabs { padding: 0 16px; overflow-x: auto; }
+    .tab { padding: 22px 14px; }
+    .gallery { column-count: 2; padding: 40px 28px 60px; }
+    .lightbox { padding: 60px 16px 90px; }
+    .lightbox-nav { padding: 12px; }
+  }
+
+  @media (max-width: 640px) {
+    .gallery { column-count: 1; }
+  }
+</style>
+
+<script define:vars={{ heroSrc: heroImg.src, pfpSrc: pfpImg.src }}>
+  const TILES = [
+    { cat: 'nature',      ratio: '3/2',  title: 'Capitol Reef, beneath the storm', loc: 'Utah · 2024',         real: heroSrc },
+    { cat: 'portraits',   ratio: '1/1',  title: 'Self, near the Pacific',          loc: 'Oregon Coast · 2025', real: pfpSrc },
+    { cat: 'real-estate', ratio: '4/5',  title: 'Pacific Heights residence',       loc: 'San Francisco · 2024' },
+    { cat: 'real-estate', ratio: '3/2',  title: 'A library, late afternoon',       loc: 'Carmel · 2025' },
+    { cat: 'portraits',   ratio: '4/5',  title: 'Eleanor, by the window',          loc: 'Studio · 2025' },
+    { cat: 'events',      ratio: '3/2',  title: 'The first dance',                 loc: 'Big Sur · 2024' },
+    { cat: 'real-estate', ratio: '5/4',  title: 'Kitchen, morning light',          loc: 'Sausalito · 2025' },
+    { cat: 'nature',      ratio: '4/5',  title: 'Cypress, in fog',                 loc: 'Point Lobos · 2024' },
+    { cat: 'events',      ratio: '1/1',  title: 'Toasts at the long table',        loc: 'Healdsburg · 2025' },
+    { cat: 'portraits',   ratio: '3/4',  title: 'Marcus, in profile',              loc: 'Studio · 2024' },
+    { cat: 'real-estate', ratio: '16/9', title: 'A sitting room, drawn quiet',     loc: 'Portland · 2025' },
+    { cat: 'portraits',   ratio: '1/1',  title: 'Hands, with a book',              loc: 'Studio · 2024' },
+    { cat: 'events',      ratio: '4/5',  title: 'Before the ceremony',             loc: 'Tilden Park · 2024' },
+    { cat: 'nature',      ratio: '3/2',  title: 'A dune, at last light',           loc: 'Mojave · 2025' },
+    { cat: 'real-estate', ratio: '5/7',  title: 'Stair, north light',              loc: 'Berkeley · 2024' },
+    { cat: 'events',      ratio: '3/2',  title: 'Lanterns, after the rain',        loc: 'Napa · 2025' },
+    { cat: 'portraits',   ratio: '4/5',  title: 'Helene, smiling',                 loc: 'Studio · 2024' },
+    { cat: 'real-estate', ratio: '3/2',  title: 'Pool house, afternoon',           loc: 'Atherton · 2025' },
+    { cat: 'nature',      ratio: '2/3',  title: 'A redwood, looking up',           loc: 'Muir Woods · 2024' },
+    { cat: 'events',      ratio: '1/1',  title: 'A vow, exchanged',                loc: 'San Juan Islands · 2025' },
+    { cat: 'portraits',   ratio: '3/4',  title: 'Cassian, by candle',              loc: 'Studio · 2025' },
+    { cat: 'real-estate', ratio: '4/5',  title: 'Bedroom, with reading chair',     loc: 'Sea Ranch · 2024' },
+    { cat: 'events',      ratio: '3/2',  title: 'Quiet hours, after',              loc: 'Sonoma · 2025' },
+    { cat: 'nature',      ratio: '5/4',  title: 'Stones, at low tide',             loc: 'Bandon · 2024' },
+  ];
+
+  const CAT_LABEL = {
+    'real-estate': 'Real Estate',
+    'portraits':   'Portraits',
+    'events':      'Events',
+    'nature':      'Nature',
+  };
+
+  const gallery = document.getElementById('gallery');
+
+  TILES.forEach((t, i) => {
+    const a = document.createElement('a');
+    a.href = '#';
+    a.className = 'tile';
+    a.dataset.cat = t.cat;
+    a.dataset.idx = String(i);
+
+    const frame = document.createElement('div');
+    frame.className = 'tile-frame';
+    frame.style.aspectRatio = t.ratio.replace('/', ' / ');
+
+    if (t.real) {
+      const img = document.createElement('img');
+      img.src = t.real;
+      img.alt = `${t.title} — ${t.loc}`;
+      img.loading = 'lazy';
+      frame.appendChild(img);
+    } else {
+      const ph = document.createElement('div');
+      ph.className = 'placeholder';
+      ph.innerHTML = `
+        <div class="ph-inner">
+          <div class="ph-tag">
+            <span>${CAT_LABEL[t.cat]}</span>
+            <span>Photo ${String(i + 1).padStart(2, '0')}</span>
+          </div>
+          <div class="ph-mid">
+            <span class="crosshair" aria-hidden="true"></span>
+            <span class="label">${t.title}</span>
+            ${t.ratio} · drop image here
+          </div>
+          <div class="ph-tag">
+            <span>${t.loc}</span>
+            <span>·</span>
+          </div>
+        </div>
+      `;
+      frame.appendChild(ph);
+    }
+
+    const cap = document.createElement('div');
+    cap.className = 'tile-caption';
+    cap.innerHTML = `
+      <span class="ttl">${t.title}</span>
+      <span class="num">N° ${String(i + 1).padStart(2, '0')}</span>
+    `;
+
+    a.appendChild(frame);
+    a.appendChild(cap);
+    a.addEventListener('click', (e) => { e.preventDefault(); openLightbox(i); });
+    gallery.appendChild(a);
+  });
+
+  /* Tab filtering */
+  const tabs = document.querySelectorAll('.tab');
+  const tabMeta = document.getElementById('tabMeta');
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      tabs.forEach((t) => t.classList.remove('is-active'));
+      tab.classList.add('is-active');
+      const cat = tab.dataset.cat;
+      let n = 0;
+      document.querySelectorAll('.tile').forEach((tile) => {
+        const match = cat === 'all' || tile.dataset.cat === cat;
+        tile.classList.toggle('is-hidden', !match);
+        if (match) n++;
+      });
+      if (tabMeta) tabMeta.textContent = `Showing ${n} ${n === 1 ? 'photo' : 'photos'}`;
+    });
+  });
+
+  /* Lightbox */
+  const lb = document.getElementById('lightbox');
+  const lbFrame = document.getElementById('lbFrame');
+  const lbCaption = document.getElementById('lbCaption');
+  const lbPrev = document.getElementById('lbPrev');
+  const lbNext = document.getElementById('lbNext');
+  const lbClose = document.getElementById('lbClose');
+  let currentIdx = 0;
+
+  function visibleTiles() {
+    return [...document.querySelectorAll('.tile:not(.is-hidden)')]
+      .map((t) => parseInt(t.dataset.idx, 10));
+  }
+
+  function renderLb() {
+    const t = TILES[currentIdx];
+    lbFrame.innerHTML = '';
+    if (t.real) {
+      const img = document.createElement('img');
+      img.src = t.real;
+      img.alt = t.title;
+      lbFrame.appendChild(img);
+    } else {
+      const ph = document.createElement('div');
+      ph.className = 'placeholder';
+      ph.style.aspectRatio = t.ratio.replace('/', ' / ');
+      ph.style.width = '900px';
+      ph.style.maxWidth = '100%';
+      ph.innerHTML = `
+        <div class="ph-inner">
+          <div class="ph-tag"><span>${CAT_LABEL[t.cat]}</span><span>Photo ${String(currentIdx + 1).padStart(2, '0')}</span></div>
+          <div class="ph-mid"><span class="crosshair"></span><span class="label">${t.title}</span>${t.ratio} · drop image here</div>
+          <div class="ph-tag"><span>${t.loc}</span><span>·</span></div>
+        </div>`;
+      lbFrame.appendChild(ph);
+    }
+    lbCaption.querySelector('.lb-plate').textContent = `Photo N° ${String(currentIdx + 1).padStart(2, '0')} — ${CAT_LABEL[t.cat]}`;
+    lbCaption.querySelector('.lb-title').textContent = t.title;
+    lbCaption.querySelector('.lb-meta').textContent = t.loc;
+  }
+
+  function openLightbox(idx) {
+    currentIdx = idx;
+    renderLb();
+    lb.classList.add('is-open');
+    lb.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lb.classList.remove('is-open');
+    lb.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  function step(d) {
+    const list = visibleTiles();
+    if (!list.length) return;
+    const pos = list.indexOf(currentIdx);
+    const nextPos = (pos + d + list.length) % list.length;
+    currentIdx = list[nextPos];
+    renderLb();
+  }
+
+  lbClose.addEventListener('click', closeLightbox);
+  lbPrev.addEventListener('click', () => step(-1));
+  lbNext.addEventListener('click', () => step(+1));
+  lb.addEventListener('click', (e) => { if (e.target === lb) closeLightbox(); });
+  document.addEventListener('keydown', (e) => {
+    if (!lb.classList.contains('is-open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') step(-1);
+    if (e.key === 'ArrowRight') step(+1);
+  });
+</script>

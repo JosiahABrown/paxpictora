@@ -1,17 +1,128 @@
 ---
+interface Props {
+  currentPage?: string;
+}
+const { currentPage } = Astro.props;
 ---
-<header class="fixed top-0 left-0 w-full z-50 bg-background/60 backdrop-blur-md animate-fade-in-up">
-  <div class="max-w-7xl mx-auto px-6 h-header-height flex items-center justify-between">
-    <a href="/" class="font-serif-sc font-bold text-xl tracking-widest text-text-primary">
-      PAX PICTORA
-    </a>
-    <nav class="flex gap-8">
-      <a href="/portfolio" class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-primary hover:text-text-secondary transition-colors">
-        Portfolio
-      </a>
-      <a href="#contact" class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-primary hover:text-text-secondary transition-colors">
-        Contact
-      </a>
-    </nav>
-  </div>
+
+<header class="site-header" id="siteHeader">
+  <a href="/" class="marque" aria-label="Pax Pictora — home">
+    Pax<span class="sep" aria-hidden="true"></span>Pictora
+  </a>
+  <nav class="primary" aria-label="Primary">
+    <a href="/portfolio" class={currentPage === 'portfolio' ? 'is-here' : ''}>Portfolio</a>
+    <a href="/#contact">Contact</a>
+  </nav>
 </header>
+
+<style>
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    padding: 28px 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 320ms ease, padding 320ms ease, border-color 320ms ease;
+    border-bottom: 1px solid transparent;
+  }
+
+  .site-header.is-scrolled {
+    padding: 18px 56px;
+    background: rgba(21, 17, 13, 0.78);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-bottom-color: var(--rule);
+  }
+
+  .site-header.always-frosted {
+    padding: 18px 56px;
+    background: rgba(21, 17, 13, 0.78);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-bottom-color: var(--rule);
+  }
+
+  .marque {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--cream);
+  }
+
+  .marque .sep {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    background: var(--accent);
+    margin: 0 14px 2px;
+    transform: rotate(45deg);
+    vertical-align: middle;
+  }
+
+  .primary {
+    display: flex;
+    gap: 44px;
+    align-items: center;
+    font-family: var(--sans);
+    font-size: 12px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+  }
+
+  .primary a {
+    position: relative;
+    padding: 4px 0;
+    transition: color 220ms ease;
+  }
+
+  .primary a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: var(--cream);
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform 360ms cubic-bezier(0.6, 0.05, 0.2, 1);
+  }
+
+  .primary a:hover,
+  .primary a.is-here {
+    color: var(--cream);
+  }
+
+  .primary a:hover::after,
+  .primary a.is-here::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+
+  @media (max-width: 960px) {
+    .site-header { padding: 22px 28px; }
+    .site-header.is-scrolled,
+    .site-header.always-frosted { padding: 14px 28px; }
+    .primary { gap: 26px; font-size: 11px; }
+  }
+</style>
+
+<script>
+  const header = document.getElementById('siteHeader');
+  if (header) {
+    if (header.dataset.frosted) {
+      header.classList.add('always-frosted');
+    } else {
+      const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 24);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    }
+  }
+</script>

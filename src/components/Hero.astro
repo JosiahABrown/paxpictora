@@ -1,21 +1,139 @@
 ---
-import { Image } from 'astro:assets';
-import bg from '../assets/images/BW-Utah.jpg';
+import { getImage } from 'astro:assets';
+import bgRaw from '../assets/images/BW-Utah.jpg';
+const bg = await getImage({ src: bgRaw });
 ---
-<section class="relative h-screen w-full flex items-center justify-center overflow-hidden">
-  <div class="absolute inset-0 w-full h-full">
-    <Image 
-      src={bg} 
-      alt="Pax Pictora Photography" 
-      class="w-full h-full object-cover"
-    />
-    <div class="absolute inset-0 bg-black/40 mix-blend-multiply"></div>
-    <div class="absolute inset-0 bg-linear-to-b from-black/60 via-transparent to-black/60"></div>
+
+<section class="hero">
+  <div
+    class="hero-image"
+    style={`background-image: url('${bg.src}')`}
+    aria-hidden="true"
+  ></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Est. MMXXIII — Traveling Photographer</div>
+    <h1 class="wordmark">Pax <em>Pictora</em></h1>
+    <p class="hero-tagline">Quiet imagery of homes, faces, and the hours in between.</p>
   </div>
-  
-  <div class="relative z-10 text-center animate-fade-in-up" style="animation-delay: 0.2s;">
-    <h1 class="font-serif-sc font-bold text-7xl md:text-9xl text-white tracking-widest">
-      PAX PICTORA
-    </h1>
+  <div class="hero-scroll" aria-hidden="true">
+    <span>Scroll</span>
+    <span class="line"></span>
   </div>
 </section>
+
+<style>
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 720px;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-image {
+    position: absolute;
+    inset: 0;
+    background-position: center 38%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transform: scale(1.04);
+  }
+
+  .hero-image::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(21, 17, 13, 0.55) 0%, rgba(21, 17, 13, 0.15) 32%, rgba(21, 17, 13, 0.25) 60%, rgba(21, 17, 13, 0.85) 100%),
+      radial-gradient(ellipse at center, rgba(21, 17, 13, 0.0) 30%, rgba(21, 17, 13, 0.35) 90%);
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 0 32px;
+    color: var(--cream);
+  }
+
+  .hero-eyebrow {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    margin-bottom: 38px;
+    display: inline-flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .hero-eyebrow::before,
+  .hero-eyebrow::after {
+    content: "";
+    width: 42px;
+    height: 1px;
+    background: var(--cream-dim);
+    display: inline-block;
+  }
+
+  .wordmark {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(72px, 13vw, 196px);
+    line-height: 0.92;
+    letter-spacing: -0.012em;
+    margin: 0;
+    text-shadow: 0 2px 40px rgba(0, 0, 0, 0.35);
+  }
+
+  .wordmark em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--cream);
+  }
+
+  .hero-tagline {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(16px, 1.4vw, 20px);
+    letter-spacing: 0.04em;
+    color: var(--cream-dim);
+    margin: 36px auto 0;
+    max-width: 540px;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .hero-scroll .line {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(180deg, var(--cream-dim), transparent);
+    animation: scrollPulse 2.6s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(0.7); }
+    50% { opacity: 1; transform: scaleY(1); }
+  }
+</style>

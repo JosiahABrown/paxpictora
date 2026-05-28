@@ -1,0 +1,98 @@
+---
+---
+
+<section class="specialties">
+  <div class="specialty-row">
+    <div class="specialty reveal">
+      <div class="num">N° 01</div>
+      <h3>Real <em>Estate</em></h3>
+      <p>Architecture photographed as it is lived in — light, line, and stillness.</p>
+    </div>
+    <div class="specialty reveal">
+      <div class="num">N° 02</div>
+      <h3><em>Portraits</em></h3>
+      <p>Editorial sittings and private commissions, made unhurried and deliberate.</p>
+    </div>
+    <div class="specialty reveal">
+      <div class="num">N° 03</div>
+      <h3>Events &amp; <em>Occasions</em></h3>
+      <p>Weddings, galas, and quiet milestones — observed with discretion.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .specialties {
+    padding: 80px 80px 140px;
+    border-top: 1px solid var(--rule);
+    position: relative;
+  }
+
+  .specialty-row {
+    max-width: 1360px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .specialty {
+    padding: 48px 40px 0;
+    border-left: 1px solid var(--rule);
+  }
+
+  .specialty:first-child {
+    border-left: none;
+    padding-left: 0;
+  }
+
+  .specialty .num {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    color: var(--accent);
+    margin-bottom: 22px;
+  }
+
+  .specialty h3 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 1.1;
+    margin: 0 0 14px;
+    color: var(--cream);
+  }
+
+  .specialty h3 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--cream-dim);
+  }
+
+  .specialty p {
+    font-family: var(--serif);
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--taupe);
+    margin: 0;
+    max-width: 32ch;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 1000ms cubic-bezier(0.2, 0.6, 0.2, 1), transform 1000ms cubic-bezier(0.2, 0.6, 0.2, 1);
+  }
+
+  .reveal.is-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 960px) {
+    .specialties { padding: 80px 28px 100px; }
+    .specialty-row { grid-template-columns: 1fr; }
+    .specialty { border-left: none; border-top: 1px solid var(--rule); padding: 36px 0 0; }
+    .specialty:first-child { border-top: none; padding-top: 0; }
+  }
+</style>

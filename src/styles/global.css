@@ -1,47 +1,41 @@
 @import "tailwindcss";
 
-@theme {
-  /* Luxury Typography Minimalist Palette */
-  --color-background: #ffffff;
-  --color-surface: #fafafa;
-  --color-text-primary: #111111;
-  --color-text-secondary: #666666;
-  --color-border-subtle: #eeeeee;
-
-  /* Typography */
-  --font-family-serif: 'Bodoni Moda', serif;
-  --font-family-sans: 'Manrope', sans-serif;
-  --font-family-serif-sc: 'Bodoni Moda SC', serif;
-
-  /* Animations */
-  --animate-fade-in-up: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-
-  /* Spacing & Layout */
-  --spacing-header-height: 80px;
-  --spacing-section: 120px;
+:root {
+  --ink: #15110d;
+  --ink-2: #1c1814;
+  --ink-3: #241e18;
+  --cream: #e8dfd1;
+  --cream-dim: #c9bda9;
+  --taupe: #9a8b78;
+  --taupe-dim: #6e6253;
+  --accent: #c4a684;
+  --rule: rgba(232, 223, 209, 0.16);
+  --rule-strong: rgba(232, 223, 209, 0.32);
+  --serif: "Cormorant Garamond", "Cormorant", Georgia, serif;
+  --sans: "Jost", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
 }
 
-@layer base {
-  body {
-    background-color: var(--color-background);
-    color: var(--color-text-primary);
-    -webkit-font-smoothing: antialiased;
-  }
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--ink);
+  color: var(--cream);
+  font-family: var(--serif);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
 
-/* Lightbox Backdrop Blur Utility */
-dialog::backdrop {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
+body {
+  background-image:
+    radial-gradient(ellipse at top, rgba(196, 166, 132, 0.04) 0%, transparent 55%),
+    radial-gradient(ellipse at bottom, rgba(196, 166, 132, 0.025) 0%, transparent 60%);
 }
 
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+a {
+  color: inherit;
+  text-decoration: none;
 }

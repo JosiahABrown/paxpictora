@@ -1,48 +1,121 @@
 ---
 ---
-<section class="py-32 bg-surface overflow-hidden">
-  <div class="max-w-4xl mx-auto px-6 text-center relative h-[400px] flex items-center justify-center">
-    <div class="testimonial-carousel relative w-full h-full flex items-center justify-center">
-      <!-- Item 1 -->
-      <div class="testimonial-item absolute transition-opacity duration-1000 ease-in-out opacity-100 flex flex-col items-center justify-center w-full">
-        <span class="font-serif text-8xl text-text-secondary/20 mb-4 block leading-none">"</span>
-        <blockquote class="font-serif text-2xl md:text-4xl text-text-primary leading-relaxed mb-8">
-          Pax Pictora transformed our brutalist concrete structure into a canvas of light and shadow. The resulting images are nothing short of poetic.
-        </blockquote>
-        <cite class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-secondary not-italic">
-          — Elena Rostova, Lead Architect
-        </cite>
-      </div>
 
-      <!-- Item 2 -->
-      <div class="testimonial-item absolute transition-opacity duration-1000 ease-in-out opacity-0 flex flex-col items-center justify-center w-full pointer-events-none">
-        <span class="font-serif text-8xl text-text-secondary/20 mb-4 block leading-none">"</span>
-        <blockquote class="font-serif text-2xl md:text-4xl text-text-primary leading-relaxed mb-8">
-          A rare eye for the spaces between things. The documentary style brought a profound authenticity to our campaign that we hadn't thought possible.
-        </blockquote>
-        <cite class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-secondary not-italic">
-          — Marcus Vance, Creative Director
-        </cite>
-      </div>
+<section class="testimonials">
+  <div class="testimonial-stage">
+    <div class="section-label">Words from Clients</div>
+    <div id="quotes" aria-live="polite">
+      <article class="quote">
+        <p class="quote-text">Josiah was an absolute pleasure to work with. He showed up on time, kept things easy and low-pressure, and gave great direction throughout the whole shoot — which made a huge difference since I'm not exactly used to being in front of a camera. We shot outdoors and the results were better than I expected. If you need professional headshots done right, Josiah's your guy.</p>
+        <div class="quote-meta">
+          <span class="who">Katheryn Hammonds</span>
+          <span class="what">Director of Marketing · Hammonds Media &amp; Marketing</span>
+        </div>
+      </article>
     </div>
   </div>
 </section>
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const items = document.querySelectorAll('.testimonial-item');
-    if (items.length <= 1) return;
+<style>
+  .testimonials {
+    background: var(--ink-2);
+    padding: 180px 80px;
+    overflow: hidden;
+    position: relative;
+  }
 
-    let currentIndex = 0;
+  .testimonials::before,
+  .testimonials::after {
+    content: "";
+    position: absolute;
+    left: 80px;
+    right: 80px;
+    height: 1px;
+    background: var(--rule);
+  }
 
-    setInterval(() => {
-      items[currentIndex].classList.remove('opacity-100');
-      items[currentIndex].classList.add('opacity-0', 'pointer-events-none');
+  .testimonials::before { top: 0; }
+  .testimonials::after { bottom: 0; }
 
-      currentIndex = (currentIndex + 1) % items.length;
+  .testimonial-stage {
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+  }
 
-      items[currentIndex].classList.remove('opacity-0', 'pointer-events-none');
-      items[currentIndex].classList.add('opacity-100');
-    }, 6000);
-  });
-</script>
+  .section-label {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 64px;
+  }
+
+  .section-label::before {
+    content: "";
+    width: 28px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .quote-text {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(24px, 2.2vw, 34px);
+    line-height: 1.38;
+    color: var(--cream);
+    margin: 0 auto 44px;
+    max-width: 36ch;
+    text-wrap: balance;
+    letter-spacing: -0.005em;
+  }
+
+  .quote-text::before {
+    content: "\201C";
+    color: var(--accent);
+    font-style: normal;
+    margin-right: 6px;
+  }
+
+  .quote-text::after {
+    content: "\201D";
+    color: var(--accent);
+    font-style: normal;
+    margin-left: 6px;
+  }
+
+  .quote-meta {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    display: inline-flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .quote-meta .who {
+    color: var(--cream);
+  }
+
+  .quote-meta .what {
+    color: var(--taupe);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+  }
+
+  @media (max-width: 960px) {
+    .testimonials { padding: 130px 28px; }
+    .testimonials::before,
+    .testimonials::after { left: 28px; right: 28px; }
+  }
+</style>

@@ -1,43 +1,501 @@
 ---
 ---
-<footer id="contact" class="pt-32 pb-16 px-6 max-w-4xl mx-auto">
-  <div class="mb-24 animate-fade-in-up">
-    <h2 class="font-serif text-4xl md:text-5xl text-text-primary mb-16 text-center">Inquiries</h2>
-    <form action="https://api.web3forms.com/submit" method="POST" class="space-y-12">
-      <!-- Web3Forms dummy access key -->
-      <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
 
-      <div class="flex flex-col group">
-        <label for="name" class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-secondary mb-2 transition-colors group-focus-within:text-text-primary">Name</label>
-        <input type="text" id="name" name="name" required class="bg-transparent border-b border-border-subtle focus:border-text-primary py-2 outline-none font-sans text-lg text-text-primary transition-colors rounded-none" />
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-header reveal">
+      <h2 class="contact-title">Let us <em>begin.</em></h2>
+      <div>
+        <p class="contact-intro">Commissions are accepted for the calendar year. Tell us a little of what you have in mind — we will return your note within two business days.</p>
       </div>
+    </div>
 
-      <div class="flex flex-col group">
-        <label for="email" class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-secondary mb-2 transition-colors group-focus-within:text-text-primary">Email</label>
-        <input type="email" id="email" name="email" required class="bg-transparent border-b border-border-subtle focus:border-text-primary py-2 outline-none font-sans text-lg text-text-primary transition-colors rounded-none" />
+    <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
+      <input type="hidden" name="access_key" value="fb887f14-f028-46f5-bb13-953c421cd905" />
+      <input type="hidden" name="subject" value="New inquiry — Pax Pictora" />
+      <input type="hidden" name="from_name" value="Pax Pictora Website" />
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
+
+      <div class="field">
+        <input id="cf-name" name="name" type="text" placeholder=" " autocomplete="name" required />
+        <label for="cf-name">Name</label>
       </div>
-
-      <div class="flex flex-col group">
-        <label for="message" class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-secondary mb-2 transition-colors group-focus-within:text-text-primary">Project Scope</label>
-        <textarea id="message" name="message" rows="4" required class="bg-transparent border-b border-border-subtle focus:border-text-primary py-2 outline-none font-sans text-lg text-text-primary transition-colors resize-none rounded-none"></textarea>
+      <div class="field">
+        <input id="cf-email" name="email" type="email" placeholder=" " autocomplete="email" required />
+        <label for="cf-email">Email</label>
       </div>
-
-      <div class="text-center pt-8">
-        <button type="submit" class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-primary border border-text-primary px-10 py-5 hover:bg-text-primary hover:text-background transition-colors duration-300">
-          Submit Inquiry
+      <div class="field">
+        <select id="cf-kind" name="commission_type" required>
+          <option value="" disabled selected hidden></option>
+          <option value="Real Estate">Real Estate</option>
+          <option value="Portrait">Portrait</option>
+          <option value="Event">Event</option>
+          <option value="Other">Something Else</option>
+        </select>
+        <label for="cf-kind">Commission Type</label>
+      </div>
+      <div class="field">
+        <input id="cf-date" name="preferred_date" type="text" placeholder=" " />
+        <label for="cf-date">Preferred Date</label>
+      </div>
+      <div class="field full">
+        <textarea id="cf-message" name="message" rows="3" placeholder=" " required></textarea>
+        <label for="cf-message">A Few Words</label>
+      </div>
+      <div class="submit-row">
+        <div class="actions">
+          <a href="https://cal.com/josiahbrown/30min" target="_blank" rel="noopener" class="cta subtle">
+            <span>Schedule a Meeting</span>
+            <span class="arrow" aria-hidden="true"></span>
+          </a>
+          <span class="divider" aria-hidden="true">or</span>
+        </div>
+        <button type="submit" class="cta">
+          <span class="label">Send Inquiry</span>
+          <span class="arrow" aria-hidden="true"></span>
         </button>
       </div>
+      <div class="form-status" id="formStatus" aria-live="polite"></div>
     </form>
-  </div>
 
-  <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-border-subtle border-opacity-50">
-    <p class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-secondary mb-4 md:mb-0">
-      &copy; {new Date().getFullYear()} Pax Pictora. All rights reserved.
-    </p>
-    <div class="flex gap-8">
-      <a href="#" class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-secondary hover:text-text-primary transition-colors">Instagram</a>
-      <a href="#" class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-secondary hover:text-text-primary transition-colors">Behance</a>
-      <a href="#" class="font-sans text-[10px] uppercase tracking-[0.2em] text-text-secondary hover:text-text-primary transition-colors">LinkedIn</a>
-    </div>
+    <footer class="site-footer">
+      <div class="footer-mark">
+        Pax<span class="lozenge-sep" aria-hidden="true"></span>Pictora
+        <span class="tag">Photography, with patience.</span>
+      </div>
+      <div class="footer-col">
+        <h4>Elsewhere</h4>
+        <ul>
+          <li><a href="https://www.instagram.com/pax_pictora/" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://paxpictora.substack.com" target="_blank" rel="noopener">Blog · Substack</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Correspondence</h4>
+        <ul>
+          <li><a href="mailto:paxpictora@gmail.com">paxpictora@gmail.com</a></li>
+          <li><a href="tel:+15038960348">+1 503 896 0348</a></li>
+          <li>Norman · Oklahoma</li>
+        </ul>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">
+          <span class="lozenge" aria-hidden="true"></span>
+          MMXXVI Pax Pictora
+        </span>
+        <span class="footer-socials">
+          <a href="https://instagram.com/paxpictora" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://paxpictora.substack.com" target="_blank" rel="noopener">Substack</a>
+        </span>
+      </div>
+    </footer>
   </div>
-</footer>
+</section>
+
+<style>
+  .contact {
+    padding: 200px 80px 80px;
+    background: var(--ink);
+    position: relative;
+  }
+
+  .contact-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .contact-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 80px;
+    gap: 60px;
+  }
+
+  .contact-title {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(72px, 11vw, 168px);
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: var(--cream);
+  }
+
+  .contact-title em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--cream-dim);
+  }
+
+  .contact-intro {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--cream-dim);
+    max-width: 36ch;
+    margin: 0 0 14px;
+  }
+
+  .contact-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px 80px;
+    margin-bottom: 96px;
+  }
+
+  .field {
+    position: relative;
+    padding-top: 22px;
+  }
+
+  .field.full {
+    grid-column: span 2;
+  }
+
+  .field label {
+    position: absolute;
+    top: 22px;
+    left: 0;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    pointer-events: none;
+    transition: transform 280ms ease, color 280ms ease, font-size 280ms ease;
+    transform-origin: left top;
+  }
+
+  .field input,
+  .field textarea,
+  .field select {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--rule-strong);
+    padding: 8px 0 14px;
+    width: 100%;
+    color: var(--cream);
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: -0.005em;
+    outline: none;
+    transition: border-color 320ms ease;
+    resize: none;
+  }
+
+  .field textarea {
+    min-height: 72px;
+    line-height: 1.5;
+    font-size: 20px;
+  }
+
+  .field select {
+    cursor: pointer;
+    background-image: linear-gradient(45deg, transparent 50%, var(--taupe) 50%), linear-gradient(135deg, var(--taupe) 50%, transparent 50%);
+    background-position: calc(100% - 14px) 22px, calc(100% - 8px) 22px;
+    background-size: 6px 6px;
+    background-repeat: no-repeat;
+  }
+
+  .field select option {
+    background: var(--ink-2);
+    color: var(--cream);
+  }
+
+  .field input:focus,
+  .field textarea:focus,
+  .field select:focus {
+    border-color: var(--accent);
+  }
+
+  .field.has-value label,
+  .field input:focus ~ label,
+  .field textarea:focus ~ label,
+  .field select:focus ~ label,
+  .field input:not(:placeholder-shown) ~ label,
+  .field textarea:not(:placeholder-shown) ~ label {
+    transform: translateY(-22px);
+    font-size: 10px;
+    color: var(--accent);
+  }
+
+  .submit-row {
+    grid-column: span 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+
+  .submit-row .actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 36px;
+  }
+
+  .submit-row .divider {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--taupe);
+  }
+
+  .form-status {
+    grid-column: span 2;
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--accent);
+    min-height: 16px;
+    opacity: 0;
+    transition: opacity 320ms ease;
+  }
+
+  .form-status.is-visible { opacity: 1; }
+  .form-status.is-error { color: #d68a82; }
+
+  .cta {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--cream);
+    color: var(--cream);
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.36em;
+    text-transform: uppercase;
+    padding: 16px 4px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+    transition: gap 320ms ease, color 320ms ease, border-color 320ms ease;
+    text-decoration: none;
+  }
+
+  .cta.subtle {
+    border-bottom-color: var(--taupe-dim);
+    color: var(--cream-dim);
+  }
+
+  .cta:hover {
+    gap: 32px;
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .cta .arrow {
+    width: 26px;
+    height: 1px;
+    background: currentColor;
+    position: relative;
+  }
+
+  .cta .arrow::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: -3px;
+    width: 8px;
+    height: 1px;
+    background: currentColor;
+    transform: rotate(35deg);
+    transform-origin: right center;
+  }
+
+  /* Footer */
+  .site-footer {
+    border-top: 1px solid var(--rule);
+    padding-top: 56px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .footer-bottom {
+    grid-column: span 3;
+    margin-top: 80px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+
+  .footer-copyright {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .footer-copyright .lozenge {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    transform: rotate(45deg);
+  }
+
+  .footer-socials {
+    display: inline-flex;
+    gap: 28px;
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+  }
+
+  .footer-socials a {
+    color: var(--cream-dim);
+    transition: color 220ms ease;
+  }
+
+  .footer-socials a:hover { color: var(--accent); }
+
+  .footer-mark {
+    font-family: var(--sans);
+    font-size: 13px;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--cream);
+  }
+
+  .lozenge-sep {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    background: var(--accent);
+    margin: 0 12px 2px;
+    transform: rotate(45deg);
+    vertical-align: middle;
+  }
+
+  .footer-mark .tag {
+    display: block;
+    margin-top: 14px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    color: var(--taupe);
+    text-transform: none;
+  }
+
+  .footer-col h4 {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.36em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    margin: 0 0 18px;
+  }
+
+  .footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-col a {
+    font-family: var(--serif);
+    font-size: 18px;
+    color: var(--cream);
+    transition: color 220ms ease, padding 220ms ease;
+    display: inline-block;
+  }
+
+  .footer-col a:hover {
+    color: var(--accent);
+    padding-left: 6px;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 1000ms cubic-bezier(0.2, 0.6, 0.2, 1), transform 1000ms cubic-bezier(0.2, 0.6, 0.2, 1);
+  }
+
+  .reveal.is-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 960px) {
+    .contact { padding: 130px 28px 60px; }
+    .contact-header { flex-direction: column; align-items: flex-start; gap: 28px; }
+    .contact-form { grid-template-columns: 1fr; gap: 40px; }
+    .field.full, .submit-row { grid-column: span 1; }
+    .submit-row { flex-direction: column; align-items: flex-start; gap: 24px; }
+    .site-footer { grid-template-columns: 1fr 1fr; }
+    .footer-bottom { grid-column: span 2; flex-direction: column; align-items: flex-start; gap: 16px; }
+  }
+</style>
+
+<script>
+  /* Floating label sync */
+  document.querySelectorAll('.field input, .field textarea, .field select').forEach((el) => {
+    const sync = () => (el as HTMLElement).parentElement?.classList.toggle('has-value', !!(el as HTMLInputElement).value);
+    el.addEventListener('input', sync);
+    el.addEventListener('change', sync);
+    sync();
+  });
+
+  /* Web3Forms async submit */
+  const form = document.getElementById('contactForm') as HTMLFormElement | null;
+  const status = document.getElementById('formStatus');
+  if (form && status) {
+    const submitBtn = form.querySelector<HTMLElement>('button[type="submit"] .label');
+    const originalLabel = submitBtn?.textContent ?? 'Send Inquiry';
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.classList.remove('is-visible', 'is-error');
+      status.textContent = '';
+      if (submitBtn) submitBtn.textContent = 'Sending…';
+
+      const data = new FormData(form);
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: data,
+        });
+        const json = await res.json().catch(() => ({}));
+        if (res.ok && json.success) {
+          status.textContent = 'Received — thank you, we will be in touch shortly.';
+          status.classList.add('is-visible');
+          form.reset();
+          document.querySelectorAll('.field').forEach((f) => f.classList.remove('has-value'));
+          if (submitBtn) submitBtn.textContent = originalLabel;
+        } else {
+          throw new Error(json.message || 'Send failed');
+        }
+      } catch {
+        status.textContent = 'Something went wrong. Please email paxpictora@gmail.com.';
+        status.classList.add('is-visible', 'is-error');
+        if (submitBtn) submitBtn.textContent = originalLabel;
+      }
+    });
+  }
+</script>
