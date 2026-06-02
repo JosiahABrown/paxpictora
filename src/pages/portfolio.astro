@@ -1,22 +1,92 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
 import { getImage } from 'astro:assets';
-import heroRaw from '../assets/images/BW-Utah.jpg';
-import pfpRaw from '../assets/images/pfp.jpg';
-const heroImg = await getImage({ src: heroRaw });
-const pfpImg = await getImage({ src: pfpRaw });
+import type { ImageMetadata } from 'astro';
+
+const CAT_LABEL: Record<string, string> = {
+  'real-estate': 'Real Estate',
+  'portraits': 'Portraits',
+  'events': 'Events',
+  'nature': 'Nature',
+};
+const CAT_ORDER = ['real-estate', 'portraits', 'events', 'nature'];
+
+// Editorial titles, keyed by the image's own file name (kept as the identifier).
+const TITLES: Record<string, string> = {
+  // Real Estate
+  'Front3': 'The approach',
+  'LivingRoom1': 'Living room, in light',
+  'Kitchen1': 'Kitchen, morning',
+  'Kitchen3': 'Kitchen, at the stove',
+  'Master1': 'Primary suite',
+  'Bedroom2-1': 'A second bedroom',
+  'MasterBath2': 'Primary bath',
+  // Portraits
+  'studio': 'Studio sitting',
+  'outdoor-portrait': 'Portrait, out of doors',
+  'outdoor-family': 'A family, gathered',
+  'allstate-1': 'On assignment, I',
+  'allstate-2': 'On assignment, II',
+  // Events
+  'BNI-1': 'Among colleagues, I',
+  'BNI-2': 'Among colleagues, II',
+  'Paws-and-pumpkins-1': 'Paws & Pumpkins, I',
+  'Paws-and-pumpkins-2': 'Paws & Pumpkins, II',
+  'Paws-and-pumpkins-3': 'Paws & Pumpkins, III',
+  // Nature
+  'astro-sunset-point-bryce-canyon': 'Sunset Point, Bryce Canyon',
+  'astro-utah-tree': 'Lone tree, under stars',
+  'beach-sunset-reflection': 'Sunset, in reflection',
+  'Tetons': 'The Tetons',
+  'longhorn': 'Longhorn, at rest',
+  'sleeping-bee': 'A sleeping bee',
+  'Cucumber-beetle': 'Cucumber beetle',
+};
+
+const modules = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/images/portfolio/**/*.{jpg,jpeg,JPG,png,webp}',
+  { eager: true },
+);
+
+// Cap rendered width to keep page weight down — the lightbox tops out at 1200px,
+// so 1600px covers it (and gallery columns) on hi-DPI screens without upscaling.
+const MAX_WIDTH = 1600;
+
+const tiles = await Promise.all(
+  Object.entries(modules).map(async ([path, mod]) => {
+    const segments = path.split('/');
+    const cat = segments[segments.length - 2];
+    const file = segments[segments.length - 1].replace(/\.[^.]+$/, '');
+    const optimized = await getImage({
+      src: mod.default,
+      width: Math.min(mod.default.width, MAX_WIDTH),
+    });
+    return {
+      cat,
+      file,
+      title: TITLES[file] ?? file.replace(/[-_]/g, ' '),
+      src: optimized.src,
+      width: mod.default.width,
+      height: mod.default.height,
+    };
+  }),
+);
+
+// Group by the tab order, then by file name within each category.
+tiles.sort((a, b) => {
+  const byCat = CAT_ORDER.indexOf(a.cat) - CAT_ORDER.indexOf(b.cat);
+  return byCat !== 0 ? byCat : a.file.localeCompare(b.file);
+});
+
+const counts: Record<string, number> = Object.fromEntries(
+  CAT_ORDER.map((c) => [c, tiles.filter((t) => t.cat === c).length]),
+);
+const pad = (n: number) => String(n).padStart(2, '0');
 ---
 
 <Layout title="Pax Pictora — Portfolio">
-  <header class="site-header" id="siteHeader">
-    <a href="/" class="marque" aria-label="Pax Pictora — home">
-      Pax<span class="sep" aria-hidden="true"></span>Pictora
-    </a>
-    <nav class="primary" aria-label="Primary">
-      <a href="/portfolio" class="is-here">Portfolio</a>
-      <a href="/#contact">Contact</a>
-    </nav>
-  </header>
+  <Navigation currentPage="portfolio" frosted />
 
   <section class="page-intro">
     <div class="top">
@@ -34,13 +104,12 @@ const pfpImg = await getImage({ src: pfpRaw });
   <div class="tabs-wrap">
     <div class="tabs" role="tablist" aria-label="Categories">
       <div class="tab-row">
-        <button class="tab is-active" data-cat="all" role="tab">All <span class="count">·24</span></button>
-        <button class="tab" data-cat="real-estate" role="tab">Real Estate <span class="count">·07</span></button>
-        <button class="tab" data-cat="portraits" role="tab">Portraits <span class="count">·06</span></button>
-        <button class="tab" data-cat="events" role="tab">Events <span class="count">·06</span></button>
-        <button class="tab" data-cat="nature" role="tab">Nature <span class="count">·05</span></button>
+        <button class="tab is-active" data-cat="all" role="tab">All <span class="count">·{pad(tiles.length)}</span></button>
+        {CAT_ORDER.map((c) => (
+          <button class="tab" data-cat={c} role="tab">{CAT_LABEL[c]} <span class="count">·{pad(counts[c])}</span></button>
+        ))}
       </div>
-      <div class="tab-meta" id="tabMeta">Showing 24 photos</div>
+      <div class="tab-meta" id="tabMeta">Showing {tiles.length} photos</div>
     </div>
   </div>
 
@@ -68,73 +137,6 @@ const pfpImg = await getImage({ src: pfpRaw });
 </Layout>
 
 <style>
-  /* Header — always frosted on portfolio */
-  .site-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 50;
-    padding: 18px 56px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: rgba(21, 17, 13, 0.78);
-    backdrop-filter: blur(14px) saturate(140%);
-    -webkit-backdrop-filter: blur(14px) saturate(140%);
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .marque {
-    font-family: var(--sans);
-    font-size: 13px;
-    letter-spacing: 0.34em;
-    text-transform: uppercase;
-    color: var(--cream);
-  }
-
-  .marque .sep {
-    display: inline-block;
-    width: 5px;
-    height: 5px;
-    background: var(--accent);
-    margin: 0 14px 2px;
-    transform: rotate(45deg);
-    vertical-align: middle;
-  }
-
-  .primary {
-    display: flex;
-    gap: 44px;
-    align-items: center;
-    font-family: var(--sans);
-    font-size: 12px;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--cream-dim);
-  }
-
-  .primary a {
-    position: relative;
-    padding: 4px 0;
-    transition: color 220ms ease;
-  }
-
-  .primary a.is-here,
-  .primary a:hover {
-    color: var(--cream);
-  }
-
-  .primary a.is-here::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 1px;
-    background: var(--cream);
-  }
-
   /* Page intro */
   .page-intro {
     padding: 180px 80px 60px;
@@ -320,8 +322,7 @@ const pfpImg = await getImage({ src: pfpRaw });
     position: relative;
   }
 
-  :global(.tile img),
-  :global(.tile .placeholder) {
+  :global(.tile img) {
     width: 100%;
     height: 100%;
     display: block;
@@ -329,83 +330,8 @@ const pfpImg = await getImage({ src: pfpRaw });
     transition: transform 1200ms cubic-bezier(0.2, 0.6, 0.2, 1), filter 600ms ease;
   }
 
-  :global(.tile:hover img),
-  :global(.tile:hover .placeholder) {
+  :global(.tile:hover img) {
     transform: scale(1.03);
-  }
-
-  :global(.placeholder) {
-    position: relative;
-    overflow: hidden;
-    background:
-      repeating-linear-gradient(45deg, rgba(196, 166, 132, 0.045) 0 1px, transparent 1px 14px),
-      linear-gradient(160deg, #2a2218 0%, #1d1812 70%);
-  }
-
-  :global(.placeholder .ph-inner) {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 22px;
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--taupe);
-  }
-
-  :global(.placeholder .ph-tag) {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-  }
-
-  :global(.placeholder .ph-tag span:first-child) { color: var(--accent); }
-
-  :global(.placeholder .ph-mid) {
-    align-self: center;
-    text-align: center;
-    line-height: 1.6;
-  }
-
-  :global(.placeholder .ph-mid .crosshair) {
-    display: block;
-    width: 36px;
-    height: 36px;
-    margin: 0 auto 18px;
-    position: relative;
-    opacity: 0.5;
-  }
-
-  :global(.placeholder .ph-mid .crosshair::before),
-  :global(.placeholder .ph-mid .crosshair::after) {
-    content: "";
-    position: absolute;
-    background: var(--taupe);
-  }
-
-  :global(.placeholder .ph-mid .crosshair::before) {
-    left: 50%; top: 0; bottom: 0;
-    width: 1px; transform: translateX(-50%);
-  }
-
-  :global(.placeholder .ph-mid .crosshair::after) {
-    top: 50%; left: 0; right: 0;
-    height: 1px; transform: translateY(-50%);
-  }
-
-  :global(.placeholder .ph-mid .label) {
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: 15px;
-    letter-spacing: 0.02em;
-    text-transform: none;
-    color: var(--cream-dim);
-    margin-bottom: 6px;
-    display: block;
   }
 
   :global(.tile-caption) {
@@ -606,57 +532,49 @@ const pfpImg = await getImage({ src: pfpRaw });
   .lightbox-nav.prev .line::after { left: 0; transform: rotate(-35deg); transform-origin: left center; }
 
   @media (max-width: 960px) {
-    .site-header { padding: 14px 28px; }
-    .primary { gap: 26px; font-size: 11px; }
     .page-intro { padding: 130px 28px 40px; }
     .page-intro .top { flex-direction: column; align-items: flex-start; gap: 28px; }
     .page-intro .meta { text-align: left; }
     .tabs { padding: 0 16px; overflow-x: auto; }
     .tab { padding: 22px 14px; }
     .gallery { column-count: 2; padding: 40px 28px 60px; }
-    .lightbox { padding: 60px 16px 90px; }
-    .lightbox-nav { padding: 12px; }
+
+    /* Not enough side room — drop the nav below the image instead of over it. */
+    .lightbox {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        "stage stage"
+        "prev  next";
+      align-content: center;
+      gap: 18px;
+      padding: 64px 16px 28px;
+    }
+    .lightbox-stage { grid-area: stage; justify-self: center; }
+    .lightbox-frame,
+    .lightbox-frame :global(> *) { max-height: calc(100vh - 320px); }
+    .lightbox-nav {
+      position: static;
+      transform: none;
+      padding: 14px 8px;
+    }
+    .lightbox-nav.prev { grid-area: prev; justify-self: start; }
+    .lightbox-nav.next { grid-area: next; justify-self: end; }
+    .lightbox-nav:hover { gap: 14px; }
   }
 
   @media (max-width: 640px) {
     .gallery { column-count: 1; }
+    .lightbox-caption {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+    .lightbox-caption .lb-meta { text-align: left; }
   }
 </style>
 
-<script define:vars={{ heroSrc: heroImg.src, pfpSrc: pfpImg.src }}>
-  const TILES = [
-    { cat: 'nature',      ratio: '3/2',  title: 'Capitol Reef, beneath the storm', loc: 'Utah · 2024',         real: heroSrc },
-    { cat: 'portraits',   ratio: '1/1',  title: 'Self, near the Pacific',          loc: 'Oregon Coast · 2025', real: pfpSrc },
-    { cat: 'real-estate', ratio: '4/5',  title: 'Pacific Heights residence',       loc: 'San Francisco · 2024' },
-    { cat: 'real-estate', ratio: '3/2',  title: 'A library, late afternoon',       loc: 'Carmel · 2025' },
-    { cat: 'portraits',   ratio: '4/5',  title: 'Eleanor, by the window',          loc: 'Studio · 2025' },
-    { cat: 'events',      ratio: '3/2',  title: 'The first dance',                 loc: 'Big Sur · 2024' },
-    { cat: 'real-estate', ratio: '5/4',  title: 'Kitchen, morning light',          loc: 'Sausalito · 2025' },
-    { cat: 'nature',      ratio: '4/5',  title: 'Cypress, in fog',                 loc: 'Point Lobos · 2024' },
-    { cat: 'events',      ratio: '1/1',  title: 'Toasts at the long table',        loc: 'Healdsburg · 2025' },
-    { cat: 'portraits',   ratio: '3/4',  title: 'Marcus, in profile',              loc: 'Studio · 2024' },
-    { cat: 'real-estate', ratio: '16/9', title: 'A sitting room, drawn quiet',     loc: 'Portland · 2025' },
-    { cat: 'portraits',   ratio: '1/1',  title: 'Hands, with a book',              loc: 'Studio · 2024' },
-    { cat: 'events',      ratio: '4/5',  title: 'Before the ceremony',             loc: 'Tilden Park · 2024' },
-    { cat: 'nature',      ratio: '3/2',  title: 'A dune, at last light',           loc: 'Mojave · 2025' },
-    { cat: 'real-estate', ratio: '5/7',  title: 'Stair, north light',              loc: 'Berkeley · 2024' },
-    { cat: 'events',      ratio: '3/2',  title: 'Lanterns, after the rain',        loc: 'Napa · 2025' },
-    { cat: 'portraits',   ratio: '4/5',  title: 'Helene, smiling',                 loc: 'Studio · 2024' },
-    { cat: 'real-estate', ratio: '3/2',  title: 'Pool house, afternoon',           loc: 'Atherton · 2025' },
-    { cat: 'nature',      ratio: '2/3',  title: 'A redwood, looking up',           loc: 'Muir Woods · 2024' },
-    { cat: 'events',      ratio: '1/1',  title: 'A vow, exchanged',                loc: 'San Juan Islands · 2025' },
-    { cat: 'portraits',   ratio: '3/4',  title: 'Cassian, by candle',              loc: 'Studio · 2025' },
-    { cat: 'real-estate', ratio: '4/5',  title: 'Bedroom, with reading chair',     loc: 'Sea Ranch · 2024' },
-    { cat: 'events',      ratio: '3/2',  title: 'Quiet hours, after',              loc: 'Sonoma · 2025' },
-    { cat: 'nature',      ratio: '5/4',  title: 'Stones, at low tide',             loc: 'Bandon · 2024' },
-  ];
-
-  const CAT_LABEL = {
-    'real-estate': 'Real Estate',
-    'portraits':   'Portraits',
-    'events':      'Events',
-    'nature':      'Nature',
-  };
+<script define:vars={{ TILES: tiles, CAT_LABEL }}>
+  const pad = (n) => String(n).padStart(2, '0');
 
   const gallery = document.getElementById('gallery');
 
@@ -669,42 +587,19 @@ const pfpImg = await getImage({ src: pfpRaw });
 
     const frame = document.createElement('div');
     frame.className = 'tile-frame';
-    frame.style.aspectRatio = t.ratio.replace('/', ' / ');
+    frame.style.aspectRatio = `${t.width} / ${t.height}`;
 
-    if (t.real) {
-      const img = document.createElement('img');
-      img.src = t.real;
-      img.alt = `${t.title} — ${t.loc}`;
-      img.loading = 'lazy';
-      frame.appendChild(img);
-    } else {
-      const ph = document.createElement('div');
-      ph.className = 'placeholder';
-      ph.innerHTML = `
-        <div class="ph-inner">
-          <div class="ph-tag">
-            <span>${CAT_LABEL[t.cat]}</span>
-            <span>Photo ${String(i + 1).padStart(2, '0')}</span>
-          </div>
-          <div class="ph-mid">
-            <span class="crosshair" aria-hidden="true"></span>
-            <span class="label">${t.title}</span>
-            ${t.ratio} · drop image here
-          </div>
-          <div class="ph-tag">
-            <span>${t.loc}</span>
-            <span>·</span>
-          </div>
-        </div>
-      `;
-      frame.appendChild(ph);
-    }
+    const img = document.createElement('img');
+    img.src = t.src;
+    img.alt = t.title;
+    img.loading = 'lazy';
+    frame.appendChild(img);
 
     const cap = document.createElement('div');
     cap.className = 'tile-caption';
     cap.innerHTML = `
       <span class="ttl">${t.title}</span>
-      <span class="num">N° ${String(i + 1).padStart(2, '0')}</span>
+      <span class="num">N° ${pad(i + 1)}</span>
     `;
 
     a.appendChild(frame);
@@ -749,28 +644,14 @@ const pfpImg = await getImage({ src: pfpRaw });
   function renderLb() {
     const t = TILES[currentIdx];
     lbFrame.innerHTML = '';
-    if (t.real) {
-      const img = document.createElement('img');
-      img.src = t.real;
-      img.alt = t.title;
-      lbFrame.appendChild(img);
-    } else {
-      const ph = document.createElement('div');
-      ph.className = 'placeholder';
-      ph.style.aspectRatio = t.ratio.replace('/', ' / ');
-      ph.style.width = '900px';
-      ph.style.maxWidth = '100%';
-      ph.innerHTML = `
-        <div class="ph-inner">
-          <div class="ph-tag"><span>${CAT_LABEL[t.cat]}</span><span>Photo ${String(currentIdx + 1).padStart(2, '0')}</span></div>
-          <div class="ph-mid"><span class="crosshair"></span><span class="label">${t.title}</span>${t.ratio} · drop image here</div>
-          <div class="ph-tag"><span>${t.loc}</span><span>·</span></div>
-        </div>`;
-      lbFrame.appendChild(ph);
-    }
-    lbCaption.querySelector('.lb-plate').textContent = `Photo N° ${String(currentIdx + 1).padStart(2, '0')} — ${CAT_LABEL[t.cat]}`;
+    const img = document.createElement('img');
+    img.src = t.src;
+    img.alt = t.title;
+    img.style.aspectRatio = `${t.width} / ${t.height}`;
+    lbFrame.appendChild(img);
+    lbCaption.querySelector('.lb-plate').textContent = `Photo N° ${pad(currentIdx + 1)} — ${CAT_LABEL[t.cat]}`;
     lbCaption.querySelector('.lb-title').textContent = t.title;
-    lbCaption.querySelector('.lb-meta').textContent = t.loc;
+    lbCaption.querySelector('.lb-meta').textContent = t.file;
   }
 
   function openLightbox(idx) {

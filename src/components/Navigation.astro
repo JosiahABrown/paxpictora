@@ -1,11 +1,12 @@
 ---
 interface Props {
   currentPage?: string;
+  frosted?: boolean;
 }
-const { currentPage } = Astro.props;
+const { currentPage, frosted } = Astro.props;
 ---
 
-<header class="site-header" id="siteHeader">
+<header class="site-header" id="siteHeader" data-frosted={frosted ? 'true' : undefined}>
   <a href="/" class="marque" aria-label="Pax Pictora — home">
     Pax<span class="sep" aria-hidden="true"></span>Pictora
   </a>
